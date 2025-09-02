@@ -1,16 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Project 1</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Gallery</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+
+    .gallery-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .gallery-title {
+      text-align: center;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 30px;
+      margin-top: 30px;
+      color: #333;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background: #fff;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to My CS180 Portfolio!</h1>
-    <a href="./1/index.html">Project 1</a>
+
+    <h1 class="title">Project 0: Becoming Friends with Your Camera</h1>
+    <div class="gallery-container">
+        <h1 class="gallery-title">Part 1: Selfie: The Wrong Way vs. The Right Way</h1>
+        <div class="gallery-grid">
+        <div class="gallery-item">
+            <img src="./media/IMG_6445.jpg" alt="Image 1">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/IMG_6448.jpg" alt="Image 2">
+        </div>
+
+        <!-- Add more images as needed -->
+        </div>
+    </div>
+
+    <div class="gallery-container">
+        <h1 class="gallery-title">Part 2: Architectural Perspective Compression</h1>
+        <div class="gallery-grid">
+        <div class="gallery-item">
+            <img src="./media/building_close.jpeg" alt="Image 1">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/building_far.jpeg" alt="Image 2">
+        </div>
+
+        <!-- Add more images as needed -->
+        </div>
+    </div>
+
+    <div class="gallery-container">
+        <h1 class="gallery-title">Part 3: The Dolly Zoom</h1>
+        <div class="gallery-grid">
+        <div class="gallery-item">
+            <img src="./media/merged.gif" alt="Image 1">
+        </div>
+
+        <!-- Add more images as needed -->
+        </div>
+    </div>
+
 </body>
 </html>
