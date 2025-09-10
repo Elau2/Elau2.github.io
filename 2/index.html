@@ -1,147 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Photo Gallery with Captions</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Photo Gallery with Captions</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 20px;
+			background: #f4f4f4;
+		}
+		
+		h1 {
+			margin-top: 10%;
+			margin-bottom: 20px;
+			padding-right: 20%;
+			padding-left: 20%;
+		}
 
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #f4f4f4;
-    }
+		h2 {
+			margin-top: 20px;
+			margin-bottom: 20px;
+			padding-right: 20%;
+			padding-left: 20%;
+		}
+		
+		p.description {
+			font-size: 1.2rem;
+			margin-bottom: 20px;
+			color: #555;
+			padding-right: 20%;
+			padding-left: 20%;
+		}
+		
+		.static-image {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		
+		.static-image img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+		}
+		
+		.gallery {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 20px;
+			padding-right: 20%;
+			padding-left: 20%;
+		}
+		
+		.gallery-item {
+			background: white;
+			border-radius: 8px;
+			overflow: hidden;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+			transition: transform 0.3s;
+		}
+		
+		.gallery-item:hover {
+			transform: scale(1.02);
+		}
+		
+		.gallery-item img {
+			width: 100%;
+			display: block;
+		}
+		
+		.caption {
+			padding: 10px;
+			font-size: 1rem;
+			text-align: center;
+			color: #333;
+		}
 
-    h1 {
-      margin-bottom: 10px;
-    }
-
-    p.description {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      color: #555;
-    }
-
-    .static-image {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .static-image img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .gallery-item {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-
-    .gallery-item:hover {
-      transform: scale(1.02);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      display: block;
-    }
-
-    .caption {
-      padding: 10px;
-      font-size: 1rem;
-      text-align: center;
-      color: #333;
-    }
-  </style>
+		.MathJax {
+			font-size: 1.5em !important;
+		}
+	</style>
+	
+	<script type="text/javascript" id="MathJax-script" async
+		src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+	</script>
 </head>
 <body>
+	
+	<h1>Images of the Russian Empire: Colorizing the Prokudin-Gorskii photo collection</h1>
+	
+	
+	<p class="description">
+		Ethan Lau
+	</p>
 
-  <h1>Photo Gallery</h1>
+	<h2>Introduction</h2>
 
+	<p class="description">
+		Prokudin-Gorskii pioneered early color photography. Having travelled the Russian Empire and convinved of the future of color photogtaphy, he pictured each scene through a glass plate using a red, green, and blue filters. 
+	</p>
 
-  <p class="description">
-    Welcome to our photo gallery! Below is a featured image, followed by a curated selection of pictures with captions. Enjoy browsing!
-  </p>
+	<h2>Methodology</h2>
 
-  <div class="static-image">
-        <img src="https://via.placeholder.com/800x400" alt="Featured Static Image">
-  </div>
-
-  <div class="gallery">
-    <div class="gallery-item">
-        <img src="./media/cathedral.jpg" alt="Sample 1">
-        <div class="caption">Caption for Photo 1</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/church.jpg" alt="Sample 2">
-        <div class="caption">Caption for Photo 2</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/emir.jpg" alt="Sample 3">
-        <div class="caption">Caption for Photo 3</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/harvesters.jpg" alt="Sample 1">
-        <div class="caption">Caption for Photo 1</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/icon.jpg" alt="Sample 2">
-        <div class="caption">Caption for Photo 2</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/italil.jpg" alt="Sample 3">
-        <div class="caption">Caption for Photo 3</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/lastochikino.jpg" alt="Sample 1">
-        <div class="caption">Caption for Photo 1</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/lugano.jpg" alt="Sample 2">
-        <div class="caption">Caption for Photo 2</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/melons.jpg" alt="Sample 3">
-        <div class="caption">Caption for Photo 3</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/monastery.jpg" alt="Sample 1">
-        <div class="caption">Caption for Photo 1</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/self_portrait.jpg" alt="Sample 2">
-        <div class="caption">Caption for Photo 2</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/siren.jpg" alt="Sample 3">
-        <div class="caption">Caption for Photo 3</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/three_generations.jpg" alt="Sample 2">
-        <div class="caption">Caption for Photo 2</div>
-    </div>
-    <div class="gallery-item">
-        <img src="./media/tobolsk.jpg" alt="Sample 3">
-        <div class="caption">Caption for Photo 3</div>
-    </div>
-
-    <!-- Add more gallery-item divs as needed -->
-  </div>
-
+	<p class="description">
+		Prokudin-Gorskii pioneered early color photography. Having travelled the Russian Empire and convinved of the future of color photogtaphy, he pictured each scene through a glass plate using a red, green, and blue filters. 
+	</p>
+	
+	
+	<div class="static-image">
+		<img src="./media/sobel.png" alt="Featured Static Image">
+	</div>
+	
+	
+	<div class="gallery">
+		<div class="gallery-item">
+			<img src="./media/cathedral.jpg" alt="Sample 1">
+			<div class="caption">Caption for Photo 1</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/church.jpg" alt="Sample 2">
+			<div class="caption">Caption for Photo 2</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/emir.jpg" alt="Sample 3">
+			<div class="caption">Caption for Photo 3</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/harvesters.jpg" alt="Sample 1">
+			<div class="caption">Caption for Photo 1</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/icon.jpg" alt="Sample 2">
+			<div class="caption">Caption for Photo 2</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/italil.jpg" alt="Sample 3">
+			<div class="caption">Caption for Photo 3</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/lastochikino.jpg" alt="Sample 1">
+			<div class="caption">Caption for Photo 1</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/lugano.jpg" alt="Sample 2">
+			<div class="caption">Caption for Photo 2</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/melons.jpg" alt="Sample 3">
+			<div class="caption">Caption for Photo 3</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/monastery.jpg" alt="Sample 1">
+			<div class="caption">Caption for Photo 1</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/self_portrait.jpg" alt="Sample 2">
+			<div class="caption">Caption for Photo 2</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/siren.jpg" alt="Sample 3">
+			<div class="caption">Caption for Photo 3</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/three_generations.jpg" alt="Sample 2">
+			<div class="caption">Caption for Photo 2</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media/tobolsk.jpg" alt="Sample 3">
+			<div class="caption">Caption for Photo 3</div>
+		</div>
+		
+		<!-- Add more gallery-item divs as needed -->
+	</div>
+	
 </body>
 </html>
