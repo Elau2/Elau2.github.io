@@ -83,7 +83,7 @@
 		}
 
 		.MathJax {
-			font-size: 1.5em !important;
+			font-size: 1.2em !important;
 		}
 	</style>
 	
@@ -109,55 +109,101 @@
 	<h2>Methodology</h2>
 
 	<p class="description">
-		Prokudin-Gorskii pioneered early color photography. Having travelled the Russian Empire and convinved of the future of color photogtaphy, he pictured each scene through a glass plate using a red, green, and blue filters. 
+		Through the sequential exposure of the same scene through red, green, and blue filters, we are able to reconstruct scenes as though it was originally taken in color. However, several challenges arose when attempting to convert the three images into a single colored image. 
 	</p>
 	
-	
 	<div class="static-image">
-		<img src="./media/sobel.png" alt="Featured Static Image">
+		<img src="./media/monastery-original.jpg" alt="Featured Static Image">
 	</div>
+
+	<p class="description">
+		The original glass pane images were foen misaligned. Therefore an alignment methology was devised. First, each of the red, green, and blue filtered images were cropped (center 80%) and normalized. The green and red channels were then aligned by determining:
+
+		$$\underset{x_o, y_o}{\text{argmax}} \sum_{x,y} I_1(x,y)I_2(x+x_o, y+y_o)$$
+
+		where \(x_o, y_o\) are the offsets of the green and red channel \(I_2\). The blue channel is depicted through \(I_1\). This naive method, also known as normalized cross correlation, worked for the vast majority of images but was slow and did not take into account images with large differing color intensities.
+	</p>
+	<p class="description">
+		Improvements to speed were implemented through the use of a gaussian pyramid, where images were continuously resized until both dimensions were strictly less than 400 pixels wide. Normalized cross correlation was then implemented and propogated up over larger and lager images. 
+	</p>
+		
 	
+	<h2>Challenges</h2>
+	<p class="description">
+		Although the majority images were  properly aligned through applying NCC on each of the color channels, some samples, as depicted below, failed to properly align using this methology. Instead of using NCC on color intensities, an approach using Sobel edge detection an using NCC alignment on those edges appeared to be more robust.
+	</p>
+
+	<p class="description">
+		Edge detection was implented using the Sobel operator, which helps detect changes in the horizontal and vertical directions respectively:
+
+		$$G_x = 
+		\begin{bmatrix}
+		-1 & 0 & 1\\
+		-2 & 0 & 2 \\
+		-1 & 0 & 1 \\
+		\end{bmatrix} * I
+		$$
+
+		$$G_y = 
+		\begin{bmatrix}
+		-1 & -2 & -1\\
+		0 & 0 & 0 \\
+		1 & 2 & 1 \\
+		\end{bmatrix} * I
+		$$
+
+		$$G = \sqrt{G_x^2 + G_y^2}$$
+
+		where \(*\) is the convolutional operator and \(I\) is the image. The magnitude of the edge was determined using horizontal and vertical magnitudes of the edge detector. NCC alignment was then performed on the edge detected image. The improved result is depicted below:
+	</p>
+
+	
+
+	<h2>Final Results</h2>
+	<p class="description">
+		The following images were produced using NCC alignment on images put through a Sobel edge detector. The displacement of the red and green channels are depicted in the caption.
+	</p>
 	
 	<div class="gallery">
 		<div class="gallery-item">
 			<img src="./media/cathedral.jpg" alt="Sample 1">
-			<div class="caption">Caption for Photo 1</div>
+			<div class="caption">R: (3, 12) G: (2, 5)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/church.jpg" alt="Sample 2">
-			<div class="caption">Caption for Photo 2</div>
+			<div class="caption">R: (-4, 58) G: (4, 25)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/emir.jpg" alt="Sample 3">
-			<div class="caption">Caption for Photo 3</div>
+			<div class="caption">R: (40, 107) G: (24, 49)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/harvesters.jpg" alt="Sample 1">
-			<div class="caption">Caption for Photo 1</div>
+			<div class="caption">R: (14, 124) G: (17, 60)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/icon.jpg" alt="Sample 2">
-			<div class="caption">Caption for Photo 2</div>
+			<div class="caption">R: (23, 90) G: (17, 42)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/italil.jpg" alt="Sample 3">
-			<div class="caption">Caption for Photo 3</div>
+			<div class="caption">R: (36, 77) G: (22, 38)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/lastochikino.jpg" alt="Sample 1">
-			<div class="caption">Caption for Photo 1</div>
+			<div class="caption">R: (-8, 76) G: (-2, -3)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/lugano.jpg" alt="Sample 2">
-			<div class="caption">Caption for Photo 2</div>
+			<div class="caption">R: (-29, 92) G: (-17, 41)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/melons.jpg" alt="Sample 3">
-			<div class="caption">Caption for Photo 3</div>
+			<div class="caption">R: (13, 177) G: (10, 80)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/monastery.jpg" alt="Sample 1">
-			<div class="caption">Caption for Photo 1</div>
+			<div class="caption">R: (2, 3) G: (2, -3)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/self_portrait.jpg" alt="Sample 2">
