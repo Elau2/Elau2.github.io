@@ -41,6 +41,10 @@
 		.static-image {
 			text-align: center;
 			margin-bottom: 30px;
+			padding-right: 30%;
+			padding-left: 30%;
+			margin-top: 5%;
+			margin-bottom: 5%;
 		}
 		
 		.static-image img {
@@ -130,8 +134,12 @@
 	
 	<h2>Challenges</h2>
 	<p class="description">
-		Although the majority images were  properly aligned through applying NCC on each of the color channels, some samples, as depicted below, failed to properly align using this methology. Instead of using NCC on color intensities, an approach using Sobel edge detection an using NCC alignment on those edges appeared to be more robust.
+		Although the majority images were  properly aligned through applying NCC on each of the color channels, some samples, as depicted below, failed to properly align using this methology. Instead of using NCC on color intensities, an approach using Sobel edge detection and using NCC alignment on those edges appeared to be more robust.
 	</p>
+
+	<div class="static-image">
+		<img src="./media/emir-naive.jpg" alt="Featured Static Image">
+	</div>
 
 	<p class="description">
 		Edge detection was implented using the Sobel operator, which helps detect changes in the horizontal and vertical directions respectively:
@@ -154,8 +162,12 @@
 
 		$$G = \sqrt{G_x^2 + G_y^2}$$
 
-		where \(*\) is the convolutional operator and \(I\) is the image. The magnitude of the edge was determined using horizontal and vertical magnitudes of the edge detector. NCC alignment was then performed on the edge detected image. The improved result is depicted below:
+		where \(*\) is the convolutional operator and \(I\) is the image. The magnitude of the edge was determined using horizontal and vertical magnitudes of the edge detector. NCC alignment was then performed on the edge detected image. While gaussian blur is typically applied prior to the Sobel filter (in order to reduce high frequency noise), blurring did not improve the effectiveness of the algorithm on these select images. The improved result is depicted below:
 	</p>
+
+	<div class="static-image">
+		<img src="./media/emir.jpg" alt="Featured Static Image">
+	</div>
 
 	
 
@@ -207,19 +219,19 @@
 		</div>
 		<div class="gallery-item">
 			<img src="./media/self_portrait.jpg" alt="Sample 2">
-			<div class="caption">Caption for Photo 2</div>
+			<div class="caption">R: (37, 176) G: (29, 78)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/siren.jpg" alt="Sample 3">
-			<div class="caption">Caption for Photo 3</div>
+			<div class="caption">R: (-24, 96) G: (-6, 49)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/three_generations.jpg" alt="Sample 2">
-			<div class="caption">Caption for Photo 2</div>
+			<div class="caption">R: (9, 111) G: (12, 54)</div>
 		</div>
 		<div class="gallery-item">
 			<img src="./media/tobolsk.jpg" alt="Sample 3">
-			<div class="caption">Caption for Photo 3</div>
+			<div class="caption">R: (3, 6) G: (3, 3)</div>
 		</div>
 		
 		<!-- Add more gallery-item divs as needed -->
