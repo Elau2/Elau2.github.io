@@ -121,14 +121,14 @@
 	</div>
 
 	<p class="description">
-		The original glass pane images were foen misaligned. Therefore an alignment methology was devised. First, each of the red, green, and blue filtered images were cropped (center 80%) and normalized. The green and red channels were then aligned by determining:
+		The original glass pane images were often misaligned. Therefore an alignment methology was devised. First, each of the red, green, and blue filtered images were cropped (center 80%) and normalized. The green and red channels were then aligned by determining:
 
 		$$\underset{x_o, y_o}{\text{argmax}} \sum_{x,y} I_1(x,y)I_2(x+x_o, y+y_o)$$
 
-		where \(x_o, y_o\) are the offsets of the green and red channel \(I_2\). The blue channel is depicted through \(I_1\). This naive method, also known as normalized cross correlation, worked for the vast majority of images but was slow and did not take into account images with large differing color intensities.
+		where \(x_o, y_o\) are the offsets of the green and red channel \(I_2\). The blue channel is depicted through \(I_1\). This nmethod, also known as normalized cross correlation, worked for the vast majority of images, but was slow and did not take into account images with large differing color intensities.
 	</p>
 	<p class="description">
-		Improvements to speed were implemented through the use of a gaussian pyramid, where images were continuously resized until both dimensions were strictly less than 400 pixels wide. Normalized cross correlation was then implemented and propogated up over larger and lager images. 
+		Improvements to speed were implemented through the use of a multi-scale pyramid, where images were continuously resized until both dimensions were strictly less than 400 pixels wide. Normalized cross correlation was then implemented and propogated up over larger and lager images, doubling the offset and searching in a small area surrounding the calculated offset. This methodology allowed for a more efficent search and drasticully reduced the number of normalized cross-correlation calculations needed, drastically increasing efficency over brute-force search for the maximum NCC. 
 	</p>
 		
 	
@@ -172,6 +172,82 @@
 	
 
 	<h2>Final Results</h2>
+
+	<p class="description">
+		The following images were produced using NCC alignment on images. The displacement of the red and green channels are depicted in the caption.
+	</p>
+	
+	<div class="gallery">
+		<div class="gallery-item">
+			<img src="./media2/cathedral.jpg" alt="Sample 1">
+			<div class="caption">R: (3, 12) G: (2, 5)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/church.jpg" alt="Sample 2">
+			<div class="caption">R: (-4, 58) G: (4, 25)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/emir.jpg" alt="Sample 3">
+			<div class="caption">R: (-205, 141) G: (24, 49)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/harvesters.jpg" alt="Sample 1">
+			<div class="caption">R: (13, 124) G: (17, 60)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/icon.jpg" alt="Sample 2">
+			<div class="caption">R: (23, 89) G: (17, 41)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/italil.jpg" alt="Sample 3">
+			<div class="caption">R: (35, 76) G: (21, 38)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/lastochikino.jpg" alt="Sample 1">
+			<div class="caption">R: (-9, 75) G: (-2, -3)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/lugano.jpg" alt="Sample 2">
+			<div class="caption">R: (-29, 93) G: (-16, 41)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/melons.jpg" alt="Sample 3">
+			<div class="caption">R: (13, 178) G: (11, 82)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/monastery.jpg" alt="Sample 1">
+			<div class="caption">R: (2, 3) G: (2, -3)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/self_portrait.jpg" alt="Sample 2">
+			<div class="caption">R: (37, 176) G: (29, 79)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/siren.jpg" alt="Sample 3">
+			<div class="caption">R: (-25, 96) G: (-6, 49)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/three_generations.jpg" alt="Sample 2">
+			<div class="caption">R: (11, 112) G: (14, 53)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/tobolsk.jpg" alt="Sample 3">
+			<div class="caption">R: (3, 6) G: (3, 3)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/books.jpg" alt="Sample 3">
+			<div class="caption">R: (-5, 124) G: (7, 52)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/building.jpg" alt="Sample 2">
+			<div class="caption">R: (11, 125) G: (7, 45)</div>
+		</div>
+		<div class="gallery-item">
+			<img src="./media2/trees.jpg" alt="Sample 3">
+			<div class="caption">R: (7, 97) G: (-32, 37)</div>
+		</div>
+	</div>
+
 	<p class="description">
 		The following images were produced using NCC alignment on images put through a Sobel edge detector. The displacement of the red and green channels are depicted in the caption.
 	</p>
