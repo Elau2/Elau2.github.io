@@ -128,7 +128,7 @@
 		where \(x_o, y_o\) are the offsets of the green and red channel \(I_2\). The blue channel is depicted through \(I_1\). This method, also known as normalized cross correlation, worked for the vast majority of images, but was slow and did not take into account images with large differing color intensities.
 	</p>
 	<p class="description">
-		Improvements to speed were implemented through the use of a multi-scale pyramid, where images were continuously resized until both dimensions were strictly less than 400 pixels wide. Normalized cross correlation was then implemented and propogated up over larger and lager images, doubling the offset and searching in a small area surrounding the calculated offset. This methodology allowed for a more efficent search and drasticully reduced the number of normalized cross-correlation calculations needed, drastically increasing efficency over brute-force search for the maximum NCC. 
+		Improvements to speed were implemented through the use of a multi-scale pyramid, where images were continuously resized until both dimensions were strictly less than 400 pixels wide. Normalized cross correlation was then implemented and propogated up over larger and lager images, doubling the offset and searching in a small area surrounding the calculated offset. This methodology allowed for a more efficent search and drastically reduced the number of normalized cross-correlation calculations needed, drastically increasing efficency over brute-force search for the maximum NCC. 
 	</p>
 		
 	
