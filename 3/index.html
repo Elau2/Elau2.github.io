@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fun with Filters and Frequencies</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+
+        h1 {
+            margin-top: 10%;
+            margin-bottom: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        p.description {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        .static-image {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-right: 30%;
+            padding-left: 30%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .static-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+        }
+
+        .caption {
+            padding: 10px;
+            font-size: 1rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .MathJax {
+            font-size: 1.2em !important;
+        }
+    </style>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+</head>
+
+<body>
+
+    <h1>Fun with Filters and Frequencies</h1>
+
+
+    <p class="description">
+        Ethan Lau
+    </p>
+
+    <h2>Part 1.1 Convolutions From Scratch</h2>
+
+    <p class="description">
+        Listed below are methods for calculating image convolutions, one naive method utilizing 4 for loops, and another
+        utilizing 2 for loops and numpy's built in parallelization. Using rough observation, the 4 loop convolution
+        method took about 50s compared to 10s to produce the three convoluted images below. One is a convolution with a
+        9x9 box filter, while the others are a convolution with the difference operator in the x and y directions.
+    </p>
+
+    <div class="static-image">
+        <img src="./media/4loop.png" alt="Featured Static Image">
+    </div>
+
+    <div class="static-image">
+        <img src="./media/2loop.png" alt="Featured Static Image">
+    </div>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/ethan.jpg" alt="Sample 1">
+            <div class="caption">Original Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/ethan_box.jpg" alt="Sample 2">
+            <div class="caption">9x9 Box Filter</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/ethan_dx.jpg" alt="Sample 3">
+            <div class="caption">Dx Operator</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/ethan_dy.jpg" alt="Sample 1">
+            <div class="caption">Dy Operator</div>
+        </div>
+    </div>
+
+
+    <h2>Part 1.2 Finite Difference Operator</h2>
+
+    <p class="description">
+        Rudimentary edge detection was created through convolution with the finite difference operators listed below.
+        The magnitude of the edge was then calculated using the euclidian norm and binarized using an arbitrrary cutoff.
+
+        $$D_x =
+        \begin{bmatrix}
+        1 & 0 & -1
+        \end{bmatrix}
+        $$
+
+        $$D_y =
+        \begin{bmatrix}
+        1 \\
+        0 \\
+        -1 \\
+        \end{bmatrix}
+        $$
+
+        $$D = \sqrt{D_x^2 + D_y^2}$$
+
+        Listed below are the results of edge detection using a finite difference operator.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/cameraman.png" alt="Sample 1">
+            <div class="caption">Original Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/cameraman_edge.png" alt="Sample 2">
+            <div class="caption">Edge Image</div>
+        </div>
+
+    </div>
+    </div>
+
+    <h2>Part 1.3 Derivative of Gaussian Filter</h2>
+
+    <p class="description">
+        A 2-dimensional gaussian kernel is created by taking the outer product of a 1D gaussian and its transpose. When
+        convoluted over the image, a gaussian blur is created. When a gaussian blur is first applied to the image, the
+        edges are smoothed out and more clearly defined. Convolving the difference operator with the gaussian kernel as
+        a single filter also provided identical results.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/dogx.png" alt="Sample 1">
+            <div class="caption">Derivative of Gaussian (x)</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/dogy.png" alt="Sample 2">
+            <div class="caption">Derivative of Gaussian (y)</div>
+        </div>
+
+    </div>
+    </div>
+
+    <p class="description">
+        Listed below is the results of the binarized derivative of gaussian filter applied sequentially and as a single
+        filter. As shown below, the procedures are mathematically equivalent.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/cameraman_gaussian.png" alt="Sample 1">
+            <div class="caption">Sequential Result</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/cameraman_gaussian_convolve.png" alt="Sample 2">
+            <div class="caption">Single Filter Result</div>
+        </div>
+
+    </div>
+
+
+    <h2>Part 2.1 Image Sharpening</h2>
+
+
+</body>
+
+</html>
