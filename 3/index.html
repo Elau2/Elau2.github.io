@@ -269,11 +269,10 @@
 
     <h2>Part 2.2 Hybrid Images</h2>
 
-    <p class="'description">
+    <p class="description">
         Hybrid images are static images that can be interpreted differnetly based on viewing distance. When up close,
         high frequencies dominate the perception of the image while at a distance, low frequencies do. This gives rise
-        to
-        these hybrid images shown below.
+        to these hybrid images shown below.
     </p>
 
     <div class="gallery">
@@ -322,6 +321,43 @@
         When we look at the dog-cat image in the fourier domain, we see higher frequencies (those farther from the
         origin) are supressed when put through a low pass filter and highlighted when put through a high pass filter.
     </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/dog_fourier.png" alt="Sample 1">
+            <div class="caption">Original Dog Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/cat_fourier.png" alt="Sample 2">
+            <div class="caption">Original Cat Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/dog_blur_fourier.png" alt="Sample 2">
+            <div class="caption">Low Pass Filtered Dog Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/cat_highfreq_fourier.png" alt="Sample 2">
+            <div class="caption">High Pass Filtered Cat Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/dog_cat_fourier.png" alt="Sample 2">
+            <div class="caption">Hybrid Image</div>
+        </div>
+    </div>
+
+    <h2>2.3 Gaussian and Laplacian Stacks</h2>
+
+    <p class="description">
+        Often times when blending two images together there exists a hard boundary between the two input images.
+        Blending images smoothly can be done through a multilayer combination of a laplacian stack. Shown below is a
+        laplcian stack of an apple and an orange, with higher frequency items shown on the top and the final gaussian
+        blur found on the second to last row. The last row contains the final result and the contributions of each of
+        the original images.
+    </p>
+
+    <div class="static-image">
+        <img src="./media/laplacian_stack.png" alt="Featured Static Image">
+    </div>
 </body>
 
 </html>
