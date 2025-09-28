@@ -352,11 +352,21 @@
         Blending images smoothly can be done through a multilayer combination of a laplacian stack. Shown below is a
         laplcian stack of an apple and an orange, with higher frequency items shown on the top and the final gaussian
         blur found on the second to last row. The last row contains the final result and the contributions of each of
-        the original images.
+        the original images. The left and middle columns represent the original images weighted by a blurred mask. 
     </p>
 
     <div class="static-image">
-        <img src="./media/laplacian_stack.png" alt="Featured Static Image">
+        <img src="./media/laplacian-stack.png" alt="Featured Static Image">
+    </div>
+
+    <h2>2.4 Multiresolution Blending</h2>
+
+    <p class="description">
+        The above process does not only work for linear masks (i.e the apple and orange were blended down the middle). Listed below is an example of a non-linear mask blending, placing a bear in a wintery background. 
+    </p>
+
+    <div class="static-image">
+        <img src="./media/laplacian-stack-bear.png" alt="Featured Static Image">
     </div>
 </body>
 
