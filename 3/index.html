@@ -319,7 +319,8 @@
     </div>
     <p class="description">
         When we look at the dog-cat image in the fourier domain, we see higher frequencies (those farther from the
-        origin) are supressed when put through a low pass filter and highlighted when put through a high pass filter.
+        origin) are supressed when put through a low pass filter. Higher frequencies in the cat image are then
+        highlighted when put through a high pass filter.
     </p>
 
     <div class="gallery">
@@ -349,10 +350,16 @@
 
     <p class="description">
         Often times when blending two images together there exists a hard boundary between the two input images.
-        Blending images smoothly can be done through a multilayer combination of a laplacian stack. Shown below is a
+        Blending images smoothly can be done through a multilayer combination of a laplacian stack. First both images
+        and a mask are sequentially blurred with a gaussian kernel. Then, the difference of each gaussian stack layer is
+        used to create the laplacian stack, each weighted by the corresponding layer of the mask's gaussian stack.
+    </p>
+    <p class="description">
+        Shown below is a
         laplcian stack of an apple and an orange, with higher frequency items shown on the top and the final gaussian
         blur found on the second to last row. The last row contains the final result and the contributions of each of
-        the original images. The left and middle columns represent the original images weighted by a blurred mask. 
+        the original images. The left and middle columns represent the original images weighted by a blurred mask, while
+        the right most column is each row's contribution to the final image.
     </p>
 
     <div class="gallery">
@@ -377,7 +384,9 @@
     <h2>2.4 Multiresolution Blending</h2>
 
     <p class="description">
-        The above process does not only work for linear masks (i.e the apple and orange were blended down the middle). Listed below is an example of a non-linear mask blending, placing a bear in a wintery background. 
+        The above process does not only work for linear masks (i.e the apple and orange were blended down the middle).
+        Listed below is an example of a non-linear mask blending, placing a bear in a wintery background. (Please zoom
+        in for the laplacian stack as this is a high defenition image.)
     </p>
 
     <div class="gallery">
