@@ -61,6 +61,8 @@
             gap: 20px;
             padding-right: 20%;
             padding-left: 20%;
+            margin-top: 5%;
+            margin-bottom: 5%;
         }
 
         .gallery-item {
@@ -223,7 +225,103 @@
 
     <h2>Part 2.1 Image Sharpening</h2>
 
+    <p class="description">
+        Images can be artificially sharpened by increasing the weight of higher frequencies. This can be done through
+        something called an unsharp mask filter. High frequencies are extracted from an image by taking the difference
+        of
+        the original image an its gaussian blur. This difference is then added back on top of the original image. This
+        process can be represented as a single filter noted below.
 
+        $$f + \alpha(f - f * g)$$
+        $$= (1 + \alpha)f - \alpha f * g$$
+        $$= f * [(1 + \alpha)\delta - \alpha g]$$
+
+        where \(f\) is the image, \(g\) is a gaussian filter, and \(\delta\) is a unit impulse. Listed below is an
+        application of the unsharp mask filter on a variety of images.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/taj.jpg" alt="Sample 1">
+            <div class="caption">Original Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/taj_sharpened.jpg" alt="Sample 2">
+            <div class="caption">Sharpened Image</div>
+        </div>
+    </div>
+
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/bird.png" alt="Sample 1">
+            <div class="caption">Sequential Result</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/bird_blurred.jpg" alt="Sample 2">
+            <div class="caption">Single Filter Result</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/bird_blurred_sharpened.jpg" alt="Sample 2">
+            <div class="caption">Single Filter Result</div>
+        </div>
+    </div>
+
+    <h2>Part 2.2 Hybrid Images</h2>
+
+    <p class="'description">
+        Hybrid images are static images that can be interpreted differnetly based on viewing distance. When up close,
+        high frequencies dominate the perception of the image while at a distance, low frequencies do. This gives rise
+        to
+        these hybrid images shown below.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/nutmeg.jpg" alt="Sample 1">
+            <div class="caption">Input Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/DerekPicture.jpg" alt="Sample 2">
+            <div class="caption">Input Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/hybrid-derek-nutmeg.jpg" alt="Sample 2">
+            <div class="caption">Hybrid Image</div>
+        </div>
+    </div>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/king.webp" alt="Sample 1">
+            <div class="caption">Input Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/harvey.jpeg" alt="Sample 2">
+            <div class="caption">Input Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/hybrid-king-harvey.jpg" alt="Sample 2">
+            <div class="caption">Hybrid Image</div>
+        </div>
+    </div>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/dog.jpg" alt="Sample 1">
+            <div class="caption">Input Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/cat.jpg" alt="Sample 2">
+            <div class="caption">Input Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/hybrid-dog-cat.jpg" alt="Sample 2">
+            <div class="caption">Hybrid Image</div>
+        </div>
+    </div>
+    <p class="description">
+        When we look at the dog-cat image in the fourier domain, we see higher frequencies (those farther from the
+        origin) are supressed when put through a low pass filter and highlighted when put through a high pass filter.
+    </p>
 </body>
 
 </html>
