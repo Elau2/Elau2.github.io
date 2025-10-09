@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fun with Filters and Frequencies</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+
+        h1 {
+            margin-top: 10%;
+            margin-bottom: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        p.description {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        .static-image {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-right: 30%;
+            padding-left: 30%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .static-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+        }
+
+        .caption {
+            padding: 10px;
+            font-size: 1rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .MathJax {
+            font-size: 1.2em !important;
+        }
+    </style>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+</head>
+
+<body>
+
+    <h1>[Auto]Stitching Photo Mosaics</h1>
+
+
+    <p class="description">
+        Ethan Lau
+    </p>
+
+    <h2>Part A.2 Recover Homographies</h2>
+
+    <p class="description">
+        A homography matrix is a 3x3 matrix that maps one set of points on a planar surface to another, relating two
+        different views of our 3D world into a 2D perspective transformation. This is done through the following
+        matrix-vector formulation.
+
+        $$w
+        \begin{bmatrix}
+        x^{'} \\ y^{'} \\ 1
+        \end{bmatrix} =
+
+        \begin{bmatrix}
+        a & b & c \\
+        d & e & f \\
+        g & h & 1
+        \end{bmatrix}
+
+        \begin{bmatrix}
+        x \\ y \\ 1
+        \end{bmatrix}
+        $$
+
+        Given a sample of at least four points from the source image to the destination image, we are able to recover
+        the homography matrix.
+        Given at more than four points, we transform the matrix into a least-squares problem.
+    </p>
+
+    <p class="description">
+        Expanding our matrix-vector formulation, we find that:
+
+        $$wx^{'} = ax + by + c$$
+        $$wy^{'} = dx + ey + f$$
+        $$w = gx + hy + 1$$
+
+        Substituting for w, we find:
+
+        $$x^{'}(gx + hy + 1) = ax + by + c$$
+        $$y^{'}(gx + hy + 1) = dx + ey + f$$
+
+        Formatting this relation using multiple points and in matrix-vector form, we find:
+
+        $$
+        \begin{bmatrix}
+        x & y & 1 & 0 & 0 & 0 & -xx^{'} & -yx^{'} \\
+        0 & 0 & 0 & x & y & 1 & -xy^{'} & -yy^{'} \\
+        &&&&\vdots
+        \end{bmatrix}
+        \begin{bmatrix}
+        a \\
+        b \\
+        \vdots \\
+        h
+        \end{bmatrix} \approx
+        \begin{bmatrix}
+        x^{'} \\
+        y^{'} \\
+        \vdots \\
+        \end{bmatrix}
+        $$
+
+        where each set of two rows of the design matrix and the resultant vector are substituted with the i'th set of
+        corresponding sample points. Since this may be an overdetermined system, least-squares is performed on this
+        relation.
+    </p>
+
+    <h2>Part A.3 Warp the Images</h2>
+
+    <p class="description">
+        Given a bounding box of an image (which can be determined using a forward transformation of your original
+        image's corners using a homography matrix), there exist at least two options for recovering your transformed
+        image.
+    </p>
+
+    <p class="description">
+        One approach uses a nearest neighbor approximation. When the bounding box is reversed-mapped back to the
+        original image, it takes
+        the color of the nearest pixel. Another approach uses bilinear interpolation, where the 4 nearest integer
+        indices are weighted by the area of the
+        rectangle defined by the opposing index and the reversed-mapped point. The results of both nearest-neighbor and
+        bilinear interpolation
+        are shown below.
+    </p>
+
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/topgun.jpeg" alt="Sample 1">
+            <div class="caption">Original Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/topgun-nn.jpeg" alt="Sample 2">
+            <div class="caption">Nearest Neighbor</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/topgun-bilinear.jpeg" alt="Sample 3">
+            <div class="caption">Bilinear</div>
+        </div>
+    </div>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/stonefire.jpeg" alt="Sample 1">
+            <div class="caption">Original Image</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/stonefire-nn.jpeg" alt="Sample 2">
+            <div class="caption">Nearest Neighbor</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/stonefire-bilinear.jpeg" alt="Sample 3">
+            <div class="caption">Bilinear</div>
+        </div>
+    </div>
+
+    <p class="description">
+        While the bilinear approach was more color-accurate with less artifacts, the approach can take a measurable
+        longer amount of time. And
+        while a vectorized approach did significantly speed up the algorithm, the use of nearest-neighbor is optimal if
+        speed is a concern.
+    </p>
+
+    <h2>Part A.4 Blend the Images into a Mosaic</h2>
+    <p class="description">
+        Given a set of point correspondences to determine a homography matrix, a mosaic can be constructed. Listed below are constructed mosaics
+        with an attempt at alpha blending.
+    </p>
+    
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/evans1.jpeg" alt="Sample 1">
+            <div class="caption">Original Image 1</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/evans2.jpeg" alt="Sample 2">
+            <div class="caption">Original Image 1</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/evans.png" alt="Sample 3">
+            <div class="caption">Mosaic</div>
+        </div>
+    </div>
+
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/berkeley1.jpeg" alt="Sample 1">
+            <div class="caption">Original Image 1</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/berkeley2.jpeg" alt="Sample 2">
+            <div class="caption">Original Image 1</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/berkeley.png" alt="Sample 3">
+            <div class="caption">Mosaic</div>
+        </div>
+    </div>
+</body>
+
+</html>
