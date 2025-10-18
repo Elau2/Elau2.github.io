@@ -110,7 +110,7 @@
 
     <h2>Part A.1 Shoot the Pictures</h2>
     <p class="description">
-        Shown below is two sets of images that are projective, done through a fixed center of projection and rotation.
+        Shown below is four sets of images that are projective, done through a fixed center of projection and rotation.
     </p>
 
 
@@ -126,6 +126,18 @@
         </div>
         <div class="gallery-item">
             <img src="./media/evans2.jpeg" alt="Sample 3">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/teton1.jpeg" alt="Sample 1">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/teton2.jpeg" alt="Sample 2">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/bridge1.jpeg" alt="Sample 3">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/bridge2.jpeg" alt="Sample 3">
         </div>
     </div>
 
@@ -193,6 +205,37 @@
         where each set of two rows of the design matrix and the resultant vector are substituted with the i'th set of
         corresponding sample points. Since this may be an overdetermined system, least-squares is performed on this
         relation.
+
+        Shown below is this process shown on an example set of images.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/corr1.png" alt="Sample 1">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/corr2.png" alt="Sample 2">
+        </div>
+    </div>
+
+    <p class="description">
+        The points shown in the image above is
+
+        $$[1404,2188], [1536,2375], [1988,2344], [2401,2199], [2822,2171], [1387,3991], [2383,4282]$$
+
+        and
+
+        $$[717,1780], [872,1976], [1360,1936], [1782,1763], [2210,1736], [843,3657], [1855,3830]$$
+
+        respectively. The recovered homography matrix was
+
+        $$
+        \begin{bmatrix}
+        1.34892130e+00 & 1.32115400e-01 & -1.34974340e+03 \\
+        6.96226753e-02 & 1.37251456e+00 & -1.02399236e+03\\
+        5.30424109e-05 & 4.28983174e-05 & 1.00000000e+00
+        \end{bmatrix}
+        $$
     </p>
 
     <h2>Part A.3 Warp the Images</h2>
@@ -253,41 +296,147 @@
 
     <h2>Part A.4 Blend the Images into a Mosaic</h2>
     <p class="description">
-        Given a set of point correspondences to determine a homography matrix, a mosaic can be constructed. Listed below are constructed mosaics
-        with an attempt at alpha blending.
+        Given a set of point correspondences to determine a homography matrix, a mosaic can be constructed. Listed below
+        are constructed mosaics
+        with blending weighted by their distance from the original image center.
     </p>
-    
-
-    <div class="gallery">
-        <div class="gallery-item">
-            <img src="./media/evans1.jpeg" alt="Sample 1">
-            <div class="caption">Original Image 1</div>
-        </div>
-        <div class="gallery-item">
-            <img src="./media/evans2.jpeg" alt="Sample 2">
-            <div class="caption">Original Image 1</div>
-        </div>
-        <div class="gallery-item">
-            <img src="./media/evans.png" alt="Sample 3">
-            <div class="caption">Mosaic</div>
-        </div>
-    </div>
 
 
     <div class="gallery">
         <div class="gallery-item">
             <img src="./media/berkeley1.jpeg" alt="Sample 1">
-            <div class="caption">Original Image 1</div>
         </div>
         <div class="gallery-item">
             <img src="./media/berkeley2.jpeg" alt="Sample 2">
-            <div class="caption">Original Image 1</div>
         </div>
         <div class="gallery-item">
-            <img src="./media/berkeley.png" alt="Sample 3">
-            <div class="caption">Mosaic</div>
+            <img src="./media/berkeley.jpeg" alt="Sample 3">
         </div>
     </div>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/teton1.jpeg" alt="Sample 1">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/teton2.jpeg" alt="Sample 2">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/teton.jpeg" alt="Sample 3">
+        </div>
+    </div>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/bridge1.jpeg" alt="Sample 1">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/bridge2.jpeg" alt="Sample 2">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/bridge.jpeg" alt="Sample 3">
+        </div>
+    </div>
+
+    <h2>Part B.1 Harris Corner Detection</h2>
+
+    <p class="description">
+        Harris Corner Detection is a corner detection operator used to find features within an image. After detecting
+        all Harris Corners, we use Adaptive Non-Maximal Suppression to select a subset of features that are locally
+        strong. We define the supression radius of a non-maximal point as:
+
+        $$r_i = \min_{j}{|x - x_j|} \text{ s.t. } f(x_i) < c_{robust}f(x_j)$$ where points lower radii are supressed.
+            Shown below is harris detection with and without ANMS. </p>
+
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="./media/harris.png" alt="Sample 1">
+                    <div class="caption">Harris Detection n=500</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./media/anms.png" alt="Sample 2">
+                    <div class="caption">ANMS n=500</div>
+                </div>
+            </div>
+
+            <h2>Part B.2 Feature Descriptor Extraction</h2>
+
+            <p class="description">
+                Using a 40x40 area around the selected point, we create a normalized 8x8 feature descriptor for
+                automatic feature matching. Shown below is a sample of 4 features:
+            </p>
+
+
+            <div class="gallery">
+                <div class="feature0.png">
+                    <img src="./media/feature0.png" alt="Sample 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="./media/feature1.png" alt="Sample 2">
+                </div>
+                <div class="feature2.png">
+                    <img src="./media/feature2.png" alt="Sample 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="./media/feature3.png" alt="Sample 2">
+                </div>
+            </div>
+
+            <h2>Part B.3 Feature Matching</h2>
+            <p class="description">
+                Given a set of points given by ANMS and extracted using the feature descriptor, we determine the
+                euclidian distance between each feature descriptor. We then rank the pairings using Lowe thresholding,
+                which takes the ratio between the best and second best matching euclidian distance. We use this ranking
+                to determine best feature pairings. Shown below is a pairing on a set of two images.
+            </p>
+
+            <div class="static-image">
+                <img src="./media/corr.jpg" alt="Featured Static Image">
+            </div>
+
+            <h2>B.4: RANSAC for Robust Homography</h2>
+            <p class="description">
+                RANSAC also known as Random Sample Consensus relies on the fact that the majority of correspondences
+                from feature matching are correct. We then can then repeatedly sample 4-points and create a homography. We then check whether 
+                the majority of feature correspondences match the predicted homography. We take the homography with the most number of inliers and recompute
+                the homography matrix based on the "majority correspondence." Shown below is automatic stiching using RANSAC on feature matching:
+            </p>
+
+            <div class="gallery">
+                <div class="feature0.png">
+                    <img src="./media/berkeley.jpeg" alt="Sample 1">
+                    <div class="caption">Manual</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./media/berkeley_auto.jpeg" alt="Sample 2">
+                    <div class="caption">Automatic</div>
+                </div>
+            </div>
+
+            <div class="gallery">
+                <div class="feature0.png">
+                    <img src="./media/teton.jpeg" alt="Sample 1">
+                    <div class="caption">Manual</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./media/teton_auto.jpeg" alt="Sample 2">
+                    <div class="caption">Automatic</div>
+                </div>
+            </div>
+
+            <div class="gallery">
+                <div class="feature0.png">
+                    <img src="./media/bridge.jpeg" alt="Sample 1">
+                    <div class="caption">Manual</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./media/bridge_auto.jpeg" alt="Sample 2">
+                    <div class="caption">Automatic</div>
+                </div>
+            </div>
+
+
+
 </body>
 
 </html>
