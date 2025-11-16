@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fun with Filters and Frequencies</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+
+        h1 {
+            margin-top: 10%;
+            margin-bottom: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        p.description {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+            padding-right: 20%;
+            padding-left: 20%;
+        }
+
+        .static-image {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-right: 30%;
+            padding-left: 30%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .static-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+        }
+
+        .caption {
+            padding: 10px;
+            font-size: 1rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .MathJax {
+            font-size: 1.2em !important;
+        }
+
+        .grid-2x2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding-right: 20%;
+            padding-left: 20%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .grid-2x2 .label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.65);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .grid-2x2 figure {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+</head>
+
+<body>
+
+    <h1>Neural Radiance Fields</h1>
+
+
+    <p class="description">
+        Ethan Lau
+    </p>
+
+    <h2>Part 0: Camera Calibration and 3D Scanning</h2>
+    <p class="description">
+        Shown below is the sampled image of a snackbag rendered if three-dimensional space.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/snacks/render1.png" alt="Sample 1">
+        </div>
+        <div class="gallery-item">
+            <img src="./media/snacks/render2.png" alt="Sample 1">
+        </div>
+    </div>
+
+
+    <h2>Part 1: Fit a Neural Field to a 2D Image</h2>
+    <p class="description">
+        Neural Radiance Fields are neural networks defined by $$F: \{x, y, z, \theta, \phi\} \rightarrow \{r, g, b,
+        \sigma\}$$ used
+        to represent a 3-dimensional space. For a simpler example, we create a network in 2-dimensions to map $$F: \{u,
+        v\} \rightarrow \{r, g, b\}$$ Shown below is the model architecture of this MLP with two dimensional inputs.
+        Position is also encoded using the scheme shown below:
+
+        $$PE(x, y) = \{x, y, \sin{2^0 \pi x}, \sin{2^0 \pi y}, \cos{2^0 \pi x}, \cos{2^0 \pi y}, \cdots, \cos{2^{L-1}
+        \pi y} \}$$
+    </p>
+    <div class="static-image">
+        <img src="./media/mlp_img.jpg" alt="Featured Static Image">
+    </div>
+    <p class="description">
+        This model was trained using the mean squared error loss function and an Adam optimizer with a learning
+        rate of 0.01. Shown below is the training progression on two sets of images with a max positional frequency of
+        (L = 10) and
+        a hidden layer width of 256. These models were trained with 2000 epochs.
+    </p>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_20.jpg" alt="Sample 1">
+            <div class="caption">Epoch 20</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_40.jpg" alt="Sample 1">
+            <div class="caption">Epoch 40</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_60.jpg" alt="Sample 1">
+            <div class="caption">Epoch 60</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_80.jpg" alt="Sample 1">
+            <div class="caption">Epoch 80</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_100.jpg" alt="Sample 1">
+            <div class="caption">Epoch 100</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_200.jpg" alt="Sample 1">
+            <div class="caption">Epoch 200</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_500.jpg" alt="Sample 1">
+            <div class="caption">Epoch 500</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_1000.jpg" alt="Sample 1">
+            <div class="caption">Epoch 1000</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_1500.jpg" alt="Sample 1">
+            <div class="caption">Epoch 1500</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/city/city_epoch_2000.jpg" alt="Sample 1">
+            <div class="caption">Epoch 2000</div>
+        </div>
+    </div>
+    <div class="static-image">
+        <img src="./media/city/city_psnr.png" alt="Featured Static Image">
+    </div>
+
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_20.jpg" alt="Sample 1">
+            <div class="caption">Epoch 20</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_40.jpg" alt="Sample 1">
+            <div class="caption">Epoch 40</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_60.jpg" alt="Sample 1">
+            <div class="caption">Epoch 60</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_80.jpg" alt="Sample 1">
+            <div class="caption">Epoch 80</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_100.jpg" alt="Sample 1">
+            <div class="caption">Epoch 100</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_200.jpg" alt="Sample 1">
+            <div class="caption">Epoch 200</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_500.jpg" alt="Sample 1">
+            <div class="caption">Epoch 500</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_1000.jpg" alt="Sample 1">
+            <div class="caption">Epoch 1000</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_1500.jpg" alt="Sample 1">
+            <div class="caption">Epoch 1500</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/fox/fox_epoch_2000.jpg" alt="Sample 1">
+            <div class="caption">Epoch 2000</div>
+        </div>
+    </div>
+
+
+    <p class="description">
+        Shown below is a 2x2 predicted results of a single set, trained with various hyperparameters. On the left are
+        the models trained with a positional encoding frequency width of L = 10 while models on the right are models
+        trained with L = 20. On the top are models with a hidden layer width of 128 while on the bottom are models with
+        hidden layer width of 256.
+    </p>
+    <div class="static-image">
+        <img src="./media/mlp_img.jpg" alt="Featured Static Image">
+    </div>
+
+    <div class="grid-2x2">
+        <figure>
+            <span class="label">ANc</span>
+            <img src="./media/fox/fox_l10_w128.jpg" alt="Image A">
+        </figure>
+
+        <figure>
+            <span class="label">B</span>
+            <img src="./media/fox/fox_l20_w128.jpg" alt="Image B">
+        </figure>
+
+        <figure>
+            <span class="label">C</span>
+            <img src="./media/fox/fox_l10_w256.jpg" alt="Image C">
+        </figure>
+
+        <figure>
+            <span class="label">D</span>
+            <img src="./media/fox/fox_l20_w256.jpg" alt="Image D">
+        </figure>
+    </div>
+
+
+
+
+    <h2>Part 2: Fit a Neural Radiance Field from Multi-view Images</h2>
+
+    <p class="description">
+        A neural radiance field was constructed to represent objects in 3d-space as shown below. However, various data
+        preprocessing was needed in order to convert images into 3-dimensional points and viewing directions, and from
+        RGB values and densities back into images. Various functions were created, including but not limited to camera
+        to world coordinate conversion, pixel to camera coordinate conversion, pixel to ray conversion, sampling rays
+        and points along rays, as well as volume rendering. Using these functions, a model architecture was created as
+        shown:
+    </p>
+    <div class="static-image">
+        <img src="./media/mlp_nerf.png" alt="Featured Static Image">
+    </div>
+    <p class="description">
+        Shown below is a visualization of the sampling process used for training. Shown is 100 rays and their associated
+        sampling point coming from a subset of 2 images.
+    </p>
+    <div class="static-image">
+        <img src="./media/sample.gif" alt="Featured Static Image">
+    </div>
+    <p class="description">
+        This model was trained using the Adam optimizer with a learning rate of 1e-5. Per epoch, 10000 rays were sampled
+        with each ray sampled 64 times.
+        This specific model was trained using 2500 epochs.
+    </p>
+    <p class="description">
+        Shown below are intermediate renders of the scene during training. Also shown is the PSNR of the training as
+        well
+        as for the validation set.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/lego/epoch100.png" alt="Sample 1">
+            <div class="caption">Epoch 100</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/lego/epoch200.png" alt="Sample 1">
+            <div class="caption">Epoch 200</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/lego/epoch500.png" alt="Sample 1">
+            <div class="caption">Epoch 500</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/lego/epoch1000.png" alt="Sample 1">
+            <div class="caption">Epoch 1000</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/lego/epoch2400.png" alt="Sample 1">
+            <div class="caption">Epoch 2400</div>
+        </div>
+    </div>
+    <div class="static-image">
+        <img src="./media/lego/psnr.png" alt="Featured Static Image">
+    </div>
+    <div class="static-image">
+        <img src="./media/lego/psnr_validation.png" alt="Featured Static Image">
+    </div>
+
+    <p class="description">
+        The final results of this 3-dimensional render using neural radiance fields are shown below.
+    </p>
+    <div class="static-image">
+        <img src="./media/lego/lego.gif" alt="Featured Static Image">
+    </div>
+
+
+    <h2>Part 2.6: Training with Your Own Data</h2>
+
+    <p class="description">
+        Shown below is the result of NERF of a sampled snack bag. This model was sampled in a much smaller distance
+        (0.01m-0.4m) range and was generated with over 10000 epochs. Also shown below are the training and validation PSNR.
+    </p>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./media/snacks/100.png" alt="Sample 1">
+            <div class="caption">Epoch 100</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/snacks/400.png" alt="Sample 1">
+            <div class="caption">Epoch 400</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/snacks/1600.png" alt="Sample 1">
+            <div class="caption">Epoch 1600</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/snacks/3200.png" alt="Sample 1">
+            <div class="caption">Epoch 3200</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/snacks/6400.png" alt="Sample 1">
+            <div class="caption">Epoch 6400</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./media/snacks/20000.png" alt="Sample 1">
+            <div class="caption">Epoch 10000</div>
+        </div>
+    </div>
+    <div class="static-image">
+        <img src="./media/snacks/psnr.png" alt="Featured Static Image">
+    </div>
+    <div class="static-image">
+        <img src="./media/snacks/validation_psnr.png" alt="Featured Static Image">
+    </div>
+    <div class="static-image">
+        <img src="./media/snacks/bag-ezgif.com-loop-count.gif" alt="Featured Static Image">
+    </div>
+
+
+
+
+</body>
+
+</html>
